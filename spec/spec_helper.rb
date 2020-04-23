@@ -13,6 +13,7 @@ else
 end
 
 require 'dataset_explorer'
+require 'awesome_print'
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure

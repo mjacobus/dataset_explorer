@@ -5,6 +5,7 @@ source 'https://rubygems.org'
 # Specify your gem's dependencies in dataset_explorer.gemspec
 gemspec
 
+gem 'awesome_print'
 gem 'coveralls', '~> 0.8.23'
 gem 'rake', '~> 12.0'
 gem 'reek'

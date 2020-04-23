@@ -29,13 +29,141 @@ Or install it yourself as:
 ```ruby
 def some_method_that_pulls_data(args)
   response = client.get('url', args)
-  DatasetExplorer.log('type-of-request', result)
+  DatasetExplorer::Collector.instance.collect('type-of-request', result)
 end
 
 # somewhere
 
-p DatasetExplorer.explain('type-of-request')
+p DatasetExplorer::Collector.explain('type-of-request')
+p DatasetExplorer::Collector.explain_all
 ```
+
+
+```ruby
+require 'bundler/setup'
+require 'open-uri'
+require 'json'
+require 'dataset_explorer'
+require 'awesome_print'
+
+urls = {
+  github: 'https://pages.github.com/versions.json',
+  github_repo_contents: 'https://api.github.com/repos/mjacobus/rubyjobsbrazil/contents',
+}
+
+COLLECTOR = DatasetExplorer::Collector.instance
+
+urls.each do |provider, url|
+  data = [JSON.parse(open(url).read)].flatten
+
+  data.each do |item|
+    COLLECTOR.collect(provider, item)
+  end
+end
+
+explanation = COLLECTOR.explain_all
+```
+
+Explanation will be:
+
+```ruby
+{
+  github: %w[
+    jekyll
+    jekyll-sass-converter
+    kramdown
+    jekyll-commonmark-ghpages
+    liquid
+    rouge
+    github-pages-health-check
+    jekyll-redirect-from
+    jekyll-sitemap
+    jekyll-feed
+    jekyll-gist
+    jekyll-paginate
+    jekyll-coffeescript
+    jekyll-seo-tag
+    jekyll-github-metadata
+    jekyll-avatar
+    jekyll-remote-theme
+    jemoji
+    jekyll-mentions
+    jekyll-relative-links
+    jekyll-optional-front-matter
+    jekyll-readme-index
+    jekyll-default-layout
+    jekyll-titles-from-headings
+    jekyll-swiss
+    minima
+    jekyll-theme-primer
+    jekyll-theme-architect
+    jekyll-theme-cayman
+    jekyll-theme-dinky
+    jekyll-theme-hacker
+    jekyll-theme-leap-day
+    jekyll-theme-merlot
+    jekyll-theme-midnight
+    jekyll-theme-minimal
+    jekyll-theme-modernist
+    jekyll-theme-slate
+    jekyll-theme-tactile
+    jekyll-theme-time-machine
+    ruby
+    github-pages
+    html-pipeline
+    sass
+    safe_yaml
+    nokogiri
+  ],
+  github_repo: [
+    'name',
+    'path',
+    'sha',
+    'size',
+    'url',
+    'html_url',
+    'git_url',
+    'download_url',
+    'type',
+    '_links.self',
+    '_links.git',
+    '_links.html'
+  ]
+}
+```
+
+```ruby
+data = {
+  user: {
+    first_name: 'John',
+    last_name: 'Doe',
+    achievements: [
+      {
+        headline: '10 nights with no sleep',
+        tag: 'amazing'
+      },
+      {
+        headline: 'read 2 books in 6 hours',
+        tag: 'nerd'
+      }
+    ]
+  }
+}
+
+DatasetExplorer::Collector.instance.collect(:achievements, data)
+result = DatasetExplorer::Collector.explain_all(:achievements)
+
+# result is:
+
+[
+  "user.first_name",
+  "user.last_name",
+  "user.achievements.[].headline",
+  "user.achievements.[].tag"
+]
+```
+
+Or if you try like this
 
 ## Development
 
