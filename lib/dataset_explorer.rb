@@ -1,4 +1,6 @@
-require "dataset_explorer/version"
+# frozen_string_literal: true
+
+require 'dataset_explorer/version'
 
 module DatasetExplorer
   class Error < StandardError; end
