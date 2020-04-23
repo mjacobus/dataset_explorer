@@ -34,10 +34,12 @@ end
 
 # somewhere
 
-p DatasetExplorer::Collector.explain('type-of-request')
-p DatasetExplorer::Collector.explain_all
+DatasetExplorer::Collector.explain('type-of-request')
+# or
+DatasetExplorer::Collector.explain_all
 ```
 
+Example:
 
 ```ruby
 require 'bundler/setup'
@@ -68,66 +70,66 @@ Explanation will be:
 
 ```ruby
 {
-  github: %w[
-    jekyll
-    jekyll-sass-converter
-    kramdown
-    jekyll-commonmark-ghpages
-    liquid
-    rouge
-    github-pages-health-check
-    jekyll-redirect-from
-    jekyll-sitemap
-    jekyll-feed
-    jekyll-gist
-    jekyll-paginate
-    jekyll-coffeescript
-    jekyll-seo-tag
-    jekyll-github-metadata
-    jekyll-avatar
-    jekyll-remote-theme
-    jemoji
-    jekyll-mentions
-    jekyll-relative-links
-    jekyll-optional-front-matter
-    jekyll-readme-index
-    jekyll-default-layout
-    jekyll-titles-from-headings
-    jekyll-swiss
-    minima
-    jekyll-theme-primer
-    jekyll-theme-architect
-    jekyll-theme-cayman
-    jekyll-theme-dinky
-    jekyll-theme-hacker
-    jekyll-theme-leap-day
-    jekyll-theme-merlot
-    jekyll-theme-midnight
-    jekyll-theme-minimal
-    jekyll-theme-modernist
-    jekyll-theme-slate
-    jekyll-theme-tactile
-    jekyll-theme-time-machine
-    ruby
-    github-pages
-    html-pipeline
-    sass
-    safe_yaml
-    nokogiri
+  github: [
+    "jekyll",
+    "jekyll-sass-converter",
+    "kramdown",
+    "jekyll-commonmark-ghpages",
+    "liquid",
+    "rouge",
+    "github-pages-health-check",
+    "jekyll-redirect-from",
+    "jekyll-sitemap",
+    "jekyll-feed",
+    "jekyll-gist",
+    "jekyll-paginate",
+    "jekyll-coffeescript",
+    "jekyll-seo-tag",
+    "jekyll-github-metadata",
+    "jekyll-avatar",
+    "jekyll-remote-theme",
+    "jemoji",
+    "jekyll-mentions",
+    "jekyll-relative-links",
+    "jekyll-optional-front-matter",
+    "jekyll-readme-index",
+    "jekyll-default-layout",
+    "jekyll-titles-from-headings",
+    "jekyll-swiss",
+    "minima",
+    "jekyll-theme-primer",
+    "jekyll-theme-architect",
+    "jekyll-theme-cayman",
+    "jekyll-theme-dinky",
+    "jekyll-theme-hacker",
+    "jekyll-theme-leap-day",
+    "jekyll-theme-merlot",
+    "jekyll-theme-midnight",
+    "jekyll-theme-minimal",
+    "jekyll-theme-modernist",
+    "jekyll-theme-slate",
+    "jekyll-theme-tactile",
+    "jekyll-theme-time-machine",
+    "ruby",
+    "github-pages",
+    "html-pipeline",
+    "sass",
+    "safe_yaml",
+    "nokogiri",
   ],
   github_repo: [
-    'name',
-    'path',
-    'sha',
-    'size',
-    'url',
-    'html_url',
-    'git_url',
-    'download_url',
-    'type',
-    '_links.self',
-    '_links.git',
-    '_links.html'
+    "name",
+    "path",
+    "sha",
+    "size",
+    "url",
+    "html_url",
+    "git_url",
+    "download_url",
+    "type",
+    "_links.self",
+    "_links.git",
+    "_links.html"
   ]
 }
 ```
