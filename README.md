@@ -1,5 +1,9 @@
 # DatasetExplorer
 
+[![Build Status](https://travis-ci.org/mjacobus/dataset_explorer.svg?branch=master)](https://travis-ci.org/mjacobus/dataset_explorer)
+[![Coverage Status](https://coveralls.io/repos/github/mjacobus/dataset_explorer/badge.svg?branch=master)](https://coveralls.io/github/mjacobus/dataset_explorer?branch=master)
+[![Maintainability](https://api.codeclimate.com/v1/badges/ae41e3facbadaabaa463/maintainability)](https://codeclimate.com/github/mjacobus/dataset_explorer/maintainability)
+
 Explores a data set and keep track of all the fields ever returned.
 
 The idea is to collect all the fields from a dataset, including the ones nested from an API that will omit some fields when they are `null`, or even to make sure that the fields listed in the documentation (or not listed at all) can be explained by the output.
