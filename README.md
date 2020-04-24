@@ -134,6 +134,8 @@ Explanation will be:
 }
 ```
 
+Or if you try like this
+
 ```ruby
 data = {
   user: {
@@ -164,8 +166,6 @@ result = DatasetExplorer::Collector.explain_all(:achievements)
   "user.achievements.[].tag"
 ]
 ```
-
-Or if you try like this
 
 ## Development
 
