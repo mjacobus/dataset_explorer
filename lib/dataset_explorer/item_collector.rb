@@ -9,15 +9,25 @@ module DatasetExplorer
     attr_reader :values
 
     def add(item)
+      unless item.is_a?(Array)
+        return add_item(item)
+      end
+
+      item.each do |i|
+        add_item(i, '[]')
+      end
+    end
+
+    private
+
+    def add_item(item, prefix = nil)
       new_values = item.keys.map do |key|
-        map_keys(item[key], key)
+        map_keys(item[key], key, prefix)
       end.flatten.map(&:to_s).uniq
 
       @values << new_values
       @values = @values.flatten.uniq
     end
-
-    private
 
     # rubocop:disable Metrics/MethodLength
     def map_keys(value, key = nil, prefix = nil)
