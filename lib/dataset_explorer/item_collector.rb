@@ -3,10 +3,19 @@
 module DatasetExplorer
   class ItemCollector
     def initialize
-      @values = []
+      @keys = []
+      @evaluators = {}
     end
 
-    attr_reader :values
+    def explain
+      {}.tap do |explanation|
+        @evaluators.each do |field, evaluator|
+          explanation[field] = evaluator.describe
+        end
+      end
+    end
+
+    attr_reader :keys
 
     def add(item)
       unless item.is_a?(Array)
@@ -25,15 +34,17 @@ module DatasetExplorer
         map_keys(item[key], key, prefix)
       end.flatten.map(&:to_s).uniq
 
-      @values << new_values
-      @values = @values.flatten.uniq
+      @keys << new_values
+      @keys = @keys.flatten.uniq
     end
 
     # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/AbcSize
     def map_keys(value, key = nil, prefix = nil)
       prefix = [prefix, key].compact.join('.')
 
       unless mappable?(value)
+        evaluator_for(prefix).evaluate(value)
         return prefix
       end
 
@@ -45,9 +56,9 @@ module DatasetExplorer
 
       if value.respond_to?(:each)
         prefix = "#{prefix}.[]"
-        return [].tap do |values|
+        return [].tap do |keys|
           value.each do |item_value|
-            values << map_keys(item_value, nil, prefix)
+            keys << map_keys(item_value, nil, prefix)
           end
         end
       end
@@ -55,6 +66,7 @@ module DatasetExplorer
       raise Error, 'Unforseen scenario'
     end
     # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/AbcSize
 
     def mappable?(value)
       if behaves_like_hash?(value)
@@ -74,6 +86,10 @@ module DatasetExplorer
 
     def behaves_like_array?(value)
       value.respond_to?(:each)
+    end
+
+    def evaluator_for(field)
+      @evaluators[field.to_s] ||= ValueEvaluator.new(field)
     end
   end
 end

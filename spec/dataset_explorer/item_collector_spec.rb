@@ -14,16 +14,18 @@ RSpec.describe DatasetExplorer::ItemCollector do
       baz
     ]
 
-    expect(entry.values).to eq(expected)
+    expect(entry.keys).to eq(expected)
   end
 
   context 'with collections' do
-    it 'properly parses entries' do
+    before do
       entry.add([{ username: :foo }])
       entry.add([{ languages: [{ name: 'ruby', experience: 'lots' }] }])
       entry.add([{ languages: [{ experience: 'lots' }] }])
       entry.add([{ username: :foo, status: { message: 'ok' } }])
+    end
 
+    it 'properly parses entries' do
       expected = [
         '[].username',
         '[].languages.[].name',
@@ -31,7 +33,7 @@ RSpec.describe DatasetExplorer::ItemCollector do
         '[].status.message'
       ]
 
-      expect(entry.values).to eq(expected)
+      expect(entry.keys).to eq(expected)
     end
   end
 
@@ -51,7 +53,7 @@ RSpec.describe DatasetExplorer::ItemCollector do
         'status.message'
       ]
 
-      expect(entry.values).to eq(expected)
+      expect(entry.keys).to eq(expected)
     end
   end
 end

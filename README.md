@@ -56,82 +56,82 @@ urls = {
 COLLECTOR = DatasetExplorer::Collector.instance
 
 urls.each do |provider, url|
-  data = [JSON.parse(open(url).read)].flatten
-
-  data.each do |item|
-    COLLECTOR.collect(provider, item)
-  end
+  data = JSON.parse(open(url).read)
+  COLLECTOR.collect(provider, data)
 end
 
-explanation = COLLECTOR.explain_all
+COLLECTOR.explain_all(format: :table).each do |type, explanation|
+  puts type
+  puts explanation
+end
 ```
 
 Explanation will be:
 
-```ruby
-{
-  github: [
-    "jekyll",
-    "jekyll-sass-converter",
-    "kramdown",
-    "jekyll-commonmark-ghpages",
-    "liquid",
-    "rouge",
-    "github-pages-health-check",
-    "jekyll-redirect-from",
-    "jekyll-sitemap",
-    "jekyll-feed",
-    "jekyll-gist",
-    "jekyll-paginate",
-    "jekyll-coffeescript",
-    "jekyll-seo-tag",
-    "jekyll-github-metadata",
-    "jekyll-avatar",
-    "jekyll-remote-theme",
-    "jemoji",
-    "jekyll-mentions",
-    "jekyll-relative-links",
-    "jekyll-optional-front-matter",
-    "jekyll-readme-index",
-    "jekyll-default-layout",
-    "jekyll-titles-from-headings",
-    "jekyll-swiss",
-    "minima",
-    "jekyll-theme-primer",
-    "jekyll-theme-architect",
-    "jekyll-theme-cayman",
-    "jekyll-theme-dinky",
-    "jekyll-theme-hacker",
-    "jekyll-theme-leap-day",
-    "jekyll-theme-merlot",
-    "jekyll-theme-midnight",
-    "jekyll-theme-minimal",
-    "jekyll-theme-modernist",
-    "jekyll-theme-slate",
-    "jekyll-theme-tactile",
-    "jekyll-theme-time-machine",
-    "ruby",
-    "github-pages",
-    "html-pipeline",
-    "sass",
-    "safe_yaml",
-    "nokogiri",
-  ],
-  github_repo: [
-    "name",
-    "path",
-    "sha",
-    "size",
-    "url",
-    "html_url",
-    "git_url",
-    "download_url",
-    "type",
-    "_links.self",
-    "_links.git",
-    "_links.html"
-  ]
-}
+```
+github
++------------------------------+--------------------------------------------------------------------------+
+| jekyll                       | Possible types: [date, time, string], NULL, Min/max Length: 5/5          |
+| jekyll-sass-converter        | Possible types: [date, time, string], NULL, Min/max Length: 5/5          |
+| kramdown                     | Possible types: [string], NULL, Min/max Length: 6/6                      |
+| jekyll-commonmark-ghpages    | Possible types: [date, time, string], NULL, Min/max Length: 5/5          |
+| liquid                       | Possible types: [string], NULL, Min/max Length: 5/5                      |
+| rouge                        | Possible types: [string], NULL, Min/max Length: 6/6                      |
+| github-pages-health-check    | Possible types: [string], NULL, Min/max Length: 6/6                      |
+| jekyll-redirect-from         | Possible types: [string], NULL, Min/max Length: 6/6                      |
+| jekyll-sitemap               | Possible types: [string], NULL, Min/max Length: 5/5                      |
+| jekyll-feed                  | Possible types: [string], NULL, Min/max Length: 6/6                      |
+| jekyll-gist                  | Possible types: [string], NULL, Min/max Length: 5/5                      |
+| jekyll-paginate              | Possible types: [string], NULL, Min/max Length: 5/5                      |
+| jekyll-coffeescript          | Possible types: [date, time, string], NULL, Min/max Length: 5/5          |
+| jekyll-seo-tag               | Possible types: [date, time, string], NULL, Min/max Length: 5/5          |
+| jekyll-github-metadata       | Possible types: [string], NULL, Min/max Length: 6/6                      |
+| jekyll-avatar                | Possible types: [string], NULL, Min/max Length: 5/5                      |
+| jekyll-remote-theme          | Possible types: [date, time, string], NULL, Min/max Length: 5/5          |
+| jemoji                       | Possible types: [date, time, string], NULL, Min/max Length: 6/6          |
+| jekyll-mentions              | Possible types: [date, time, string], NULL, Min/max Length: 5/5          |
+| jekyll-relative-links        | Possible types: [date, time, string], NULL, Min/max Length: 5/5          |
+| jekyll-optional-front-matter | Possible types: [date, time, string], NULL, Min/max Length: 5/5          |
+| jekyll-readme-index          | Possible types: [string], NULL, Min/max Length: 5/5                      |
+| jekyll-default-layout        | Possible types: [date, time, string], NULL, Min/max Length: 5/5          |
+| jekyll-titles-from-headings  | Possible types: [date, time, string], NULL, Min/max Length: 5/5          |
+| jekyll-swiss                 | Possible types: [string], NULL, Min/max Length: 5/5                      |
+| minima                       | Possible types: [date, time, string], NULL, Min/max Length: 5/5          |
+| jekyll-theme-primer          | Possible types: [date, time, string], NULL, Min/max Length: 5/5          |
+| jekyll-theme-architect       | Possible types: [date, time, string], NULL, Min/max Length: 5/5          |
+| jekyll-theme-cayman          | Possible types: [date, time, string], NULL, Min/max Length: 5/5          |
+| jekyll-theme-dinky           | Possible types: [date, time, string], NULL, Min/max Length: 5/5          |
+| jekyll-theme-hacker          | Possible types: [date, time, string], NULL, Min/max Length: 5/5          |
+| jekyll-theme-leap-day        | Possible types: [date, time, string], NULL, Min/max Length: 5/5          |
+| jekyll-theme-merlot          | Possible types: [date, time, string], NULL, Min/max Length: 5/5          |
+| jekyll-theme-midnight        | Possible types: [date, time, string], NULL, Min/max Length: 5/5          |
+| jekyll-theme-minimal         | Possible types: [date, time, string], NULL, Min/max Length: 5/5          |
+| jekyll-theme-modernist       | Possible types: [date, time, string], NULL, Min/max Length: 5/5          |
+| jekyll-theme-slate           | Possible types: [date, time, string], NULL, Min/max Length: 5/5          |
+| jekyll-theme-tactile         | Possible types: [date, time, string], NULL, Min/max Length: 5/5          |
+| jekyll-theme-time-machine    | Possible types: [date, time, string], NULL, Min/max Length: 5/5          |
+| ruby                         | Possible types: [date, time, string], NULL, Min/max Length: 5/5          |
+| github-pages                 | Possible types: [date, time, string, integer], NULL, Min/max Length: 3/3 |
+| html-pipeline                | Possible types: [date, time, string], NULL, Min/max Length: 6/6          |
+| sass                         | Possible types: [date, time, string], NULL, Min/max Length: 5/5          |
+| safe_yaml                    | Possible types: [string], NULL, Min/max Length: 5/5                      |
+| nokogiri                     | Possible types: [date, time, string], NULL, Min/max Length: 6/6          |
++------------------------------+--------------------------------------------------------------------------+
+github_repo_contents
++-----------------+---------------------------------------------------------+
+| [].name         | Possible types: [string], NULL, Min/max Length: 2/14    |
+| [].path         | Possible types: [string], NULL, Min/max Length: 2/14    |
+| [].sha          | Possible types: [string], NULL, Min/max Length: 40/40   |
+| [].size         | Possible types: [integer], NULL                         |
+| [].url          | Possible types: [string], NULL, Min/max Length: 75/87   |
+| [].html_url     | Possible types: [string], NULL, Min/max Length: 57/69   |
+| [].git_url      | Possible types: [string], NULL, Min/max Length: 103/103 |
+| [].download_url | Possible types: [string], NULL, Min/max Length: 72/79   |
+| [].type         | Possible types: [string], NULL, Min/max Length: 3/4     |
+| []._links.self  | Possible types: [string], NULL, Min/max Length: 75/87   |
+| []._links.git   | Possible types: [string], NULL, Min/max Length: 103/103 |
+| []._links.html  | Possible types: [string], NULL, Min/max Length: 57/69   |
++-----------------+---------------------------------------------------------+
 ```
 
 Or if you try like this
@@ -155,7 +155,7 @@ data = {
 }
 
 DatasetExplorer::Collector.instance.collect(:achievements, data)
-result = DatasetExplorer::Collector.explain_all(:achievements)
+result = DatasetExplorer::Collector.instance.explain(:achievements).keys
 
 # result is:
 
