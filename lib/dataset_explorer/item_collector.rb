@@ -4,6 +4,7 @@ module DatasetExplorer
   class ItemCollector
     def initialize
       @keys = []
+      @evaluators = {}
     end
 
     attr_reader :keys
@@ -34,6 +35,7 @@ module DatasetExplorer
       prefix = [prefix, key].compact.join('.')
 
       unless mappable?(value)
+        evaluator_for(key).evaluate(value)
         return prefix
       end
 
@@ -74,6 +76,10 @@ module DatasetExplorer
 
     def behaves_like_array?(value)
       value.respond_to?(:each)
+    end
+
+    def evaluator_for(field)
+      @evaluators[field] ||= ValueEvaluator.new(field)
     end
   end
 end
