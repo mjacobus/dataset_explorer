@@ -17,6 +17,24 @@ RSpec.describe DatasetExplorer::ItemCollector do
     expect(entry.values).to eq(expected)
   end
 
+  context 'with collections' do
+    it 'properly parses entries' do
+      entry.add([{ username: :foo }])
+      entry.add([{ languages: [{ name: 'ruby', experience: 'lots' }] }])
+      entry.add([{ languages: [{ experience: 'lots' }] }])
+      entry.add([{ username: :foo, status: { message: 'ok' } }])
+
+      expected = [
+        '[].username',
+        '[].languages.[].name',
+        '[].languages.[].experience',
+        '[].status.message'
+      ]
+
+      expect(entry.values).to eq(expected)
+    end
+  end
+
   context 'with nested objected' do
     before do
       entry.add(username: :foo)
