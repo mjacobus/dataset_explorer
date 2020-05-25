@@ -7,6 +7,14 @@ module DatasetExplorer
       @evaluators = {}
     end
 
+    def explain
+      {}.tap do |explanation|
+        @evaluators.each do |field, evaluator|
+          explanation[field] = evaluator.describe
+        end
+      end
+    end
+
     attr_reader :keys
 
     def add(item)
@@ -31,11 +39,12 @@ module DatasetExplorer
     end
 
     # rubocop:disable Metrics/MethodLength
+    # rubocop:disable Metrics/AbcSize
     def map_keys(value, key = nil, prefix = nil)
       prefix = [prefix, key].compact.join('.')
 
       unless mappable?(value)
-        evaluator_for(key).evaluate(value)
+        evaluator_for(prefix).evaluate(value)
         return prefix
       end
 
@@ -57,6 +66,7 @@ module DatasetExplorer
       raise Error, 'Unforseen scenario'
     end
     # rubocop:enable Metrics/MethodLength
+    # rubocop:enable Metrics/AbcSize
 
     def mappable?(value)
       if behaves_like_hash?(value)
@@ -79,7 +89,7 @@ module DatasetExplorer
     end
 
     def evaluator_for(field)
-      @evaluators[field] ||= ValueEvaluator.new(field)
+      @evaluators[field.to_s] ||= ValueEvaluator.new(field)
     end
   end
 end

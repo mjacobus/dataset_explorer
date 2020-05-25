@@ -1,5 +1,9 @@
 # frozen_string_literal: true
 
+require 'date'
+require 'time'
+require 'terminal-table'
+
 module DatasetExplorer
   class ValueEvaluator
     attr_reader :min_length
@@ -26,19 +30,7 @@ module DatasetExplorer
         return
       end
 
-      if value.respond_to?(:length)
-        length = value.length
-        @min_length ||= length
-        @max_length ||= length
-
-        if @min_length > length
-          @min_length = length
-        end
-
-        if @max_length < length
-          @max_length = length
-        end
-      end
+      evaluate_length(value)
 
       @evaluators.each do |key, evaluator|
         unless evaluator.accept?(value)
@@ -52,8 +44,8 @@ module DatasetExplorer
     end
 
     def describe
-      parts = ["Possible types: #{types.join(', ')}"]
-      if null
+      parts = ["Possible types: [#{types.join(', ')}]"]
+      if @null
         parts << 'NULL'
       end
 
@@ -62,6 +54,24 @@ module DatasetExplorer
       end
 
       parts.join(', ')
+    end
+
+    def evaluate_length(value)
+      unless value.respond_to?(:length)
+        return
+      end
+
+      length = value.length
+      @min_length ||= length
+      @max_length ||= length
+
+      if @min_length > length
+        @min_length = length
+      end
+
+      if @max_length < length
+        @max_length = length
+      end
     end
 
     class TimeEvaluator

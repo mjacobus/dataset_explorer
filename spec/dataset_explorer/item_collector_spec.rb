@@ -18,12 +18,14 @@ RSpec.describe DatasetExplorer::ItemCollector do
   end
 
   context 'with collections' do
-    it 'properly parses entries' do
+    before do
       entry.add([{ username: :foo }])
       entry.add([{ languages: [{ name: 'ruby', experience: 'lots' }] }])
       entry.add([{ languages: [{ experience: 'lots' }] }])
       entry.add([{ username: :foo, status: { message: 'ok' } }])
+    end
 
+    it 'properly parses entries' do
       expected = [
         '[].username',
         '[].languages.[].name',
