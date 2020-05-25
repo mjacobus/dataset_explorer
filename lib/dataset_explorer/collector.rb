@@ -21,7 +21,7 @@ module DatasetExplorer
     end
 
     def explain(type)
-      @collectors.fetch(type).values
+      @collectors.fetch(type).keys
     end
 
     private

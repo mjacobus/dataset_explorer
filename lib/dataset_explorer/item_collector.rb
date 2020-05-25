@@ -3,10 +3,10 @@
 module DatasetExplorer
   class ItemCollector
     def initialize
-      @values = []
+      @keys = []
     end
 
-    attr_reader :values
+    attr_reader :keys
 
     def add(item)
       unless item.is_a?(Array)
@@ -25,8 +25,8 @@ module DatasetExplorer
         map_keys(item[key], key, prefix)
       end.flatten.map(&:to_s).uniq
 
-      @values << new_values
-      @values = @values.flatten.uniq
+      @keys << new_values
+      @keys = @keys.flatten.uniq
     end
 
     # rubocop:disable Metrics/MethodLength
@@ -45,9 +45,9 @@ module DatasetExplorer
 
       if value.respond_to?(:each)
         prefix = "#{prefix}.[]"
-        return [].tap do |values|
+        return [].tap do |keys|
           value.each do |item_value|
-            values << map_keys(item_value, nil, prefix)
+            keys << map_keys(item_value, nil, prefix)
           end
         end
       end
